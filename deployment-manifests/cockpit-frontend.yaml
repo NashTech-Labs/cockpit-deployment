@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cockpit-ui
+  namespace: cockpit
+spec:
+  selector:
+    matchLabels:
+      app: cockpit-ui
+  template:
+    metadata:
+      labels:
+        app: cockpit-ui
+    spec:
+      containers:
+      - name: cockpit-ui
+        image: rahulsoni285/cockpit-ui:latest
+        imagePullPolicy: Always
+        resources: {}
+        ports:
+        - containerPort: 80
+
+
+
+       

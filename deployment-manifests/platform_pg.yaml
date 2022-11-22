@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: platform-postgres
+  namespace: postgres
+spec:
+  selector:
+    matchLabels:
+      app: platform-postgres
+  template:
+    metadata:
+      labels:
+        app: platform-postgres
+    spec:
+      containers:
+      - name: platform-postgres
+        image: postgres
+        env:
+          - name: PGDATA
+            value: /var/lib/postgresql/data/guacamole
+          - name: POSTGRES_DB
+            value: platform-db
+          - name: POSTGRES_PASSWORD
+            value: platform
+          - name: POSTGRES_USER
+            value: platform
+        resources: {}
+        ports:
+        - containerPort: 5432

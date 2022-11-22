@@ -1,0 +1,35 @@
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   name: liquibase
+# spec:
+#   selector:
+#     matchLabels:
+#       app: liquibase
+#   template:
+#     metadata:
+#       labels:
+#         app: liquibase
+#     spec:
+#       volumes:
+#         - name: psql
+#           configMap:
+#             name: liquibase-sql-script
+#       containers:
+#       - name: liquibase
+#         image: liquibase/liquibase
+#         volumeMounts:
+#           - name: psql
+#             mountPath: /liquibase/changelog/
+#         command:
+#           - /liquibase/liquibase
+#         args:
+#           - --changeLogFile="guacamole_init.postgres.sql" 
+#           - --classpath=/liquibase/changelog 
+#           # - --driver=org.postgresql.Driver
+#           - --url="jdbc:postgresql://guacamole-pg-svc:5432/guacamole_db?user=guacamole&password=guacamole"
+#           - --log-level=DEBUG 
+#           - update 
+#         resources: {}
+
+  

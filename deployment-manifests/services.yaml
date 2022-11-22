@@ -1,0 +1,112 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: guacd-svc
+  namespace: guacamole
+spec:
+  selector:
+    app: guacd
+  ports:
+  - port: 4822
+    targetPort: 4822
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: guacamole-pg-svc
+  namespace: postgres
+spec:
+  selector:
+    app: guacamole-postgres
+  ports:
+  - port: 5432
+    targetPort: 5432
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: platform-pg-svc
+  namespace: postgres
+spec:
+  selector:
+    app: platform-postgres
+  ports:
+  - port: 5432
+    targetPort: 5432
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: guacamole-svc
+  namespace: guacamole
+spec:
+  selector:
+    app: guacamole
+  ports:
+  - port: 8080
+    targetPort: 8080
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cockpitapp
+  namespace: cockpit
+spec:
+  selector:
+    app: cockpitapp
+  ports:
+  - port: 8000
+    targetPort: 8000
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rabbitmq
+  namespace: rabbitmq
+spec:
+  ports:
+  - name: rabbitmq-messaging-empd
+    port: 4369
+    protocol: TCP
+    targetPort: 4369
+  - name: additional-port
+    port: 5551
+    protocol: TCP
+    targetPort: 5551
+  - name: additional-portt
+    port: 5552
+    protocol: TCP
+    targetPort: 5552
+  - name: rabbitmq-messaging-amqp-unencrypted-backup-port
+    port: 5672
+    protocol: TCP
+    targetPort: 5672
+  - name: rabbitmq-messaging-erlang-distribution
+    port: 25672
+    protocol: TCP
+    targetPort: 25672
+  - name: additional-porttt
+    port: 15672
+    protocol: TCP
+    targetPort: 15672
+  selector:
+    app: rabbitmq
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cockpit-ui
+  namespace: cockpit
+spec:
+  selector:
+    app: cockpit-ui
+  ports:
+  - port: 80
+    targetPort: 5001
+  type: LoadBalancer

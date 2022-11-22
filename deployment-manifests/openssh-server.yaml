@@ -1,0 +1,21 @@
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   name: openssh-server
+#   namespace: default
+# spec:
+#   replicas: 1
+#   selector:
+#     matchLabels:
+#       app: openssh-server
+#   template:
+#     metadata:
+#       labels:
+#         app: openssh-server
+#     spec:
+#       containers:
+#       - image: lscr.io/linuxserver/openssh-server
+#         imagePullPolicy: Always
+#         name: openssh-server
+#         ports:
+#         - containerPort: 2222

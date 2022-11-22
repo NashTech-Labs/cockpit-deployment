@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: guacamole
+  namespace: guacamole
+spec:
+  selector:
+    matchLabels:
+      app: guacamole
+  template:
+    metadata:
+      labels:
+        app: guacamole
+    spec:
+      containers:
+      - name: guacamole
+        image: guacamole/guacamole
+        env:
+          - name: GUACD_HOSTNAME
+            value: guacd-svc.guacamole.svc.cluster.local
+          - name: POSTGRES_DATABASE
+            value: guacamole-db
+          - name: POSTGRES_HOSTNAME
+            value: guacamole-pg-svc.postgres.svc.cluster.local
+          - name: POSTGRES_PASSWORD
+            value: guacamole
+          - name: POSTGRES_USER
+            value: guacamole
+        resources: {}
+        ports:
+        - containerPort: 8080
+        

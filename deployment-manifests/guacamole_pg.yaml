@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: guacamole-postgres
+  namespace: postgres
+spec:
+  selector:
+    matchLabels:
+      app: guacamole-postgres
+  template:
+    metadata:
+      labels:
+        app: guacamole-postgres
+    spec:
+      containers:
+      - name: guacamole-postgres
+        image: postgres
+        env:
+          - name: PGDATA
+            value: /var/lib/postgresql/data/guacamole
+          - name: POSTGRES_DB
+            value: guacamole-db
+          - name: POSTGRES_PASSWORD
+            value: guacamole
+          - name: POSTGRES_USER
+            value: guacamole
+        resources: {}
+        ports:
+        - containerPort: 5432

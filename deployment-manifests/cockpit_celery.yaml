@@ -1,0 +1,97 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cockpit-celery-guacamole-worker
+  namespace: cockpit
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cocktip_celery_guacamole_worker
+  template:
+    metadata:
+      labels:
+        app: cocktip_celery_guacamole_worker
+    spec:
+      containers:
+      - image: atishashaurya2865/cocktip_celery_guacamole_worker:latest
+        imagePullPolicy: Always
+        env:
+          - name: GUACAMOLE_HOST
+            value: 10.104.10.174:8080
+          - name: GUACAMOLE_USERNAME
+            value: guacadmin
+          - name: GUACAMOLE_PASSWORD
+            value: guacadmin
+          - name: GUACAMOLE_DB_NAME
+            value: guacamole-db
+          - name: GUACAMOLE_DB_USER
+            value: guacamole
+          - name: GUACAMOLE_DB_PASSWORD
+            value: guacamole
+          - name: GUACAMOLE_DB_HOST
+            value: guacamole-pg-svc.postgres.svc.cluster.local
+          - name: GUACAMOLE_DB_PORT
+            value: "5432"
+          - name: PLATFORM_DB_NAME
+            value: platform-db
+          - name: PLATFORM_DB_USER
+            value: platform
+          - name: PLATFROM_DB_PASSWORD
+            value: platform
+          - name: PLATFORM_DB_HOST
+            value: platform-pg-svc.postgres.svc.cluster.local
+          - name: PLATFORM_DB_PORT
+            value: "5432"
+          - name: MESSAGE_BROKER_URL
+            value: amqp://rabbitmq.rabbitmq.svc.cluster.local
+            ## optional env
+
+          - name: AWS_ACCESS_KEY_ID
+            value: AKIATP5UWSXHUQNAIAMO
+          - name: AWS_SECRET_ACCESS_KEY
+            value: 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
+          - name: AWS_DEFAULT_REGION
+            value: us-east-1
+          - name: AWS_POLL_DELAY_SECONDS
+            value: "30"
+          - name: AWS_MAX_ATTEMPTS
+            value: "3000"
+          - name: AWS_TIMEOUT_SECONDS
+            value: "3000"
+          - name: EMAIL_HOST_USER
+            value: cockpit010@gmail.com
+          - name: EMAIL_HOST_PASSWORD
+            value: b8670eb6d66882063dbe
+          - name: JENKINS_CONFIG
+            value: "/config"
+          - name: JENKINS_TOKEN
+            value: 11ab4cf8a214c1c730005e0767a4995b0c
+          - name: JENKINS_ADMIN_USER
+            value: cockpitadmin
+          - name: JENKINS_ADMIN_PASSWORD
+            value: 030e7617f1a4
+          - name: JENKINS_DOCKER_DEAMON
+            value: "tcp://44.205.52.222:2375"
+          - name: GRAFANA_API_TOKEN
+            value: 'eyJrIjoiT1lOa2FnYzIwVjJETlZraGlZNm1Cd2FnRHUwQTRwajkiLCJuIjoiY29ja3BpdC10ZXN0IiwiaWQiOjF9'
+          - name: GRAFANA_HOST
+            value: '184.72.69.81:3000'
+        name: cockpit-celery-guacamole-worker
+        resources: {}
+        command:
+        - celery
+        - -A
+        - cockpit
+        - worker
+        - -Q
+        - guacamole
+        - -n
+        - guacamole_worker
+        - --loglevel=info
+        - --autoscale
+        - 4,2
+        
+
+
+
