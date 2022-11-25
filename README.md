@@ -1,5 +1,5 @@
 # cockpit-deployment
-cockpit-deployment
+cockpit-deployment using manifest files
 ```
 cd  deployment-manifests 
 ```
